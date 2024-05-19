@@ -44,3 +44,6 @@ souscription-exposition/src/main/resources/application-dev-*.yml
 # ignore local Helm files
 chart/Chart.lock
 chart/charts/
+
+# à remettre plus tard
+docker-compose.yml
