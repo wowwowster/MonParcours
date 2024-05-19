@@ -1,0 +1,2 @@
+FROM docker-registry-devops.pf.echnonet/bnpp-pf/liquibase-postgres:23.0-2
+ADD souscription-infrastructure/src/main/resources/db/ /applis/liquibase/changeLog/db/

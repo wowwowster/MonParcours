@@ -1,0 +1,6 @@
+global:
+bnpSelectors:
+  ecosystem: EC0821008707
+  env: dev
+  appcode: AP43225
+  opscontact: LIST.PARISBP2ICLOUDNG_at_bnpparibas.com

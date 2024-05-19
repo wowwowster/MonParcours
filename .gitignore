@@ -1,0 +1,46 @@
+# Intellij
+.idea
+*.iml
+*,iws
+*.ipr
+*.ids
+*.orig
+
+# EcLipse
+.classpath
+.project
+**/.settings/
+**/.factorypath
+
+# VSCode
+vscode/*
+
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+deb_dist
+develop-eggs
+target
+venv
+.cache
+Sonar
+.oracle_jre_Usage
+.scannerwork
+
+.coveragerc
+.coverage
+
+*.DS_Store
+
+# ignore some configuration files with secrets
+souscription-exposition/src/main/resources/application-dev-*.yml
+
+# ignore local Helm files
+chart/Chart.lock
+chart/charts/
