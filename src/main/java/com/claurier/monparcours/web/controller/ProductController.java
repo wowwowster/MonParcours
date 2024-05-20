@@ -2,9 +2,11 @@ package com.claurier.monparcours.web.controller;
 
 import com.claurier.monparcours.model.Product;
 import com.claurier.monparcours.web.dao.ProductDao;
+import com.claurier.monparcours.web.exceptions.ProduitIntrouvableException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -41,11 +43,10 @@ public class ProductController {
 
     //Récupérer un produit par son Id
     @GetMapping(value = "/Produits/{id}")
-
-    public Product afficherUnProduit(@PathVariable int id)
-    {
-        return productDao.findById(id);
-
+    public Product afficherUnProduit(@PathVariable int id) {
+        Product produit = productDao.findById(id);
+        if(produit==null) throw new ProduitIntrouvableException("Le produit avec l'id " + id + " est INTROUVABLE. Écran Bleu si je pouvais.");
+        return produit;
     }
 
     @GetMapping(value = "test/produits/{prixLimit}")
@@ -56,7 +57,7 @@ public class ProductController {
 
  //ajouter un produit
   @PostMapping(value = "/Produits")
-  public ResponseEntity<Void> ajouterProduit(@RequestBody Product product) {
+  public ResponseEntity<Void> ajouterProduit(@Valid @RequestBody Product product) {
     Product productAdded =  productDao.save(product);
 
     if (productAdded == null)
