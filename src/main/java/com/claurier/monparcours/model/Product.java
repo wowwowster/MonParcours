@@ -1,13 +1,15 @@
 package com.claurier.monparcours.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
-//@JsonIgnoreProperties(value = {"prixAchat", "id"})
-@JsonFilter("monFiltreDynamique")
+
+//@JsonFilter("monFiltreDynamique")
+@Entity
 public class Product {
 
+    @Id
     private int id;
 
     private String nom;
