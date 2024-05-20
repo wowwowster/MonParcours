@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(value = {"prixAchat", "id"})
-//@JsonFilter("monFiltreDynamique")
+//@JsonIgnoreProperties(value = {"prixAchat", "id"})
+@JsonFilter("monFiltreDynamique")
 public class Product {
 
     private int id;

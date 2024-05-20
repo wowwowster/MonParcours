@@ -2,9 +2,13 @@ package com.claurier.monparcours.web.controller;
 
 import com.claurier.monparcours.model.Product;
 import com.claurier.monparcours.web.dao.ProductDao;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -22,10 +26,15 @@ public class ProductController {
         this.productDao = productDao;
     }
 
+    //Récupérer la liste des produits
     @GetMapping("/Produits")
-    public List<Product> listeProduits() {
-        return productDao.findAll();
-
+    public MappingJacksonValue listeProduits() {
+        List<Product> produits = productDao.findAll();
+        SimpleBeanPropertyFilter monFiltre = SimpleBeanPropertyFilter.serializeAllExcept("prixAchat");
+        FilterProvider listDeNosFiltres = new SimpleFilterProvider().addFilter("monFiltreDynamique", monFiltre);
+        MappingJacksonValue produitsFiltres = new MappingJacksonValue(produits);
+        produitsFiltres.setFilters(listDeNosFiltres);
+        return produitsFiltres;
     }
 
     @GetMapping(value = "/Produits/{id}")
