@@ -2,6 +2,8 @@ package com.claurier.monparcours.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.Contact;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,4 +17,15 @@ public class OpenApiConfig {
                         .version("1.0")
                         .description("Documentation de l'API Mon Parcours"));
     }
+
+    @Bean
+    public GroupedOpenApi api() {
+        return GroupedOpenApi.builder()
+                .group("v1")
+                .pathsToMatch("/Produits/**")
+                .packagesToScan("com.claurier.monparcours.web")
+                .build();
+    }
 }
+
+
