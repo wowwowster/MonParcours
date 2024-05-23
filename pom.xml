@@ -8,9 +8,11 @@
         <version>3.2.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.claurier</groupId>
+
+    <groupId>com.claurier.habitat.back</groupId>
     <artifactId>monparcours</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>monparcours</name>
     <description>Mon parcours</description>
 
@@ -68,5 +70,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <modules>
+        <module>monparcours-domain</module>
+        <module>monparcours-application</module>
+        <module>monparcours-exposition</module>
+        <module>monparcours-infrastructure</module>
+    </modules>
 
 </project>
