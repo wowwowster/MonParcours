@@ -1,0 +1,191 @@
+swagger: "2.0"
+
+info:
+  description: "To complete"
+  version: 1.0.0
+  title: "Opportunity overview services"
+
+  contact:
+    name: "Le contact"
+    email: "wowwowster@gmail.com"
+
+host: "localhost"
+basePath: "/"
+
+tags:
+  - name: "Opportunity-v1"
+    description: "Access to the opportunity informations"
+
+schemes:
+  - "https"
+
+paths:
+
+  /v1/Opportunitys:
+    get:
+      tags:
+        - "opportunity-v1"
+      summary: "Get all the Opportunitys"
+      operationId: "getAllOpportunitys"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/Opportunity'
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: '#/definitions/Error'
+      deprecated: false
+
+    post:
+      tags:
+        - "Opportunity-v1"
+      summary: "Add a Opportunity"
+      operationId: "addOpportunity"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: body
+          description: "Opportunity à ajouter"
+          required: true
+          schema:
+            $ref: '#/definitions/Opportunity'
+      responses:
+        201:
+          description: "Opportunity ajouté"
+          headers:
+            Location:
+              type: string
+              description: "New resource location"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: '#/definitions/Error'
+      deprecated: false
+
+  /opportunitys/{id}:
+    delete:
+      tags:
+        - "Opportunity-v1"
+      summary: "Remove a Opportunity"
+      operationId: "removeOpportunity"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: "id"
+          description: "L'identifiant unique de l'entité Opportunity"
+          required: true
+          type: string
+          format: UUID
+      responses:
+        204:
+          description: "Opportunity deleted"
+          schema:
+            items:
+              $ref: '#/definitions/Opportunity'
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: '#/definitions/Error'
+      deprecated: false
+
+    put:
+      tags:
+        - "opportunity-v1"
+      summary: "Update a Opportunity"
+      operationId: "updateOpportunity"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: "id"
+          description: "L'identifiant unique de l'entité Opportunity"
+          required: true
+          type: string
+          format: UUID
+        - in: body
+          name: body
+          description: "Opportunity à mettre à jour"
+          required: true
+          schema:
+            $ref: '#/definitions/Opportunity'
+      responses:
+        204:
+          description: "Opportunity updated"
+          schema:
+            items:
+              $ref: '#/definitions/Opportunity'
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: '#/definitions/Error'
+      deprecated: false
+
+  /ping:
+    get:
+      tags:
+        - "Opportunity-v1"
+      summary: "Ping method for health check"
+      operationId: "ping"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/PingStatus'
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: '#/definitions/Error'
+      deprecated: false
+
+definitions:
+
+  # Message d'erreur
+  Error:
+    type: object
+    title: "Error"
+    description: "Error structure"
+    properties:
+      additional_information:
+        type: object
+        description: "Additional data associated to this error (typically for automated process). String key/value format."
+        properties:
+          additionalProperties:
+            type: string
+      error:
+        type: string
+        description: "The error code. Ex : invalid_request. To use in automated process."
+      error_description:
+        type: string
+        description: "The detailed human readable ASCII text explaining in details the error."
+
+  # Statut du service 
+  PingStatus:
+    type: "string"
+    enum: [ "ALL_OK", "DEGRADED" ]
+    title: "PingStatus"
+    description: "Ping status"
+
+  # Définition de l'objet Opportunity
+  Opportunity:
+    type: object
+    properties:
+      # Id technique
+      id:
+        type: string
+        format: UUID

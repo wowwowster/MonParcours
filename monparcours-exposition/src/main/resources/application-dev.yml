@@ -1,0 +1,31 @@
+logging:
+  config: 'classpath:logback-dev.xml'
+
+spring:
+  datasource:
+    username: habitat
+    password: habitat
+  hibernate:
+    ddl-auto: validate
+  hazelcast:
+    network:
+      join:
+        multicast:
+          enabled: true
+  cloud:
+    vault:
+      enabled: false
+
+kafka:
+  schema-registry:
+    auto-register-schemas: true
+  ssl:
+    enabled: false
+  auto-create-mode: true
+
+security:
+  oauth2:
+    resourceserver:
+      jwk:
+        # Put your IDP valid URL for Token validation
+        jwk-set-uri: http://127.0.0.1:8080/auth/realms/realms-name/protocol/openid-connect/certs

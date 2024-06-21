@@ -1,0 +1,69 @@
+spring:
+  application:
+    name: monparcours
+  jta:
+    enabled: false
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    driver-class-name: org.postgresql.Driver
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: false
+  datasource:
+    url: "jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}"
+    hikari:
+      data-source-properties:
+        socketTimeout: 30
+
+server:
+  port: 9090
+
+# Logging Configurations
+logging:
+  level:
+    ROOT: INFO
+    org.springframework: WARN
+
+# claurier : à confirmer ?
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+kafka:
+  enabled: true
+  ssl:
+    enabled: true
+  topic:
+    topic_opportunity: topic_opportunity
+    cre_creation_numero_dossier: XXXXX-PFFRA-SALES-XXXXXXXXXASSIGNMENTTOPIC-${KAFKA_CRE_ENV}
+  consumergroup:
+    consumer_group_opportunity: consumer_group_opportunity
+    consumer_group_cre_creation_numero_dossier: XXXXX-PFFRA-HABITAT-CXXXXXXXXXXXXASSIGNMENT-CONSUMERGROUP-${KAFKA_ENV}
+  event:
+    version: 1.0.0
+  schema-registry:
+    url: ${KAFKA_SCHEMA_REGISTRY_HOST}
+    ssl:
+      trust-store-location: /applis/certs/kafka-truststore.jks
+      key-store-location: /applis/certs/kafka-keystore.jks
+  bootstrap-servers:
+    url: ${KAFKA_BROKER_HOST}
+    ssl:
+      trust-store-location: /applis/certs/kafka-truststore.jks
+      key-store-location: /applis/certs/kafka-keystore.jks
+  # flags d'activation de consommation et config consumer auto.offset.reset des différents messages/topics kafka
+  cre-creation-numero-dossier:
+    enabled: ${CRE_CREATION_NUMERO_DOSSIER_ENABLED}
+    auto-offset-reset: ${CRE_CREATION_NUMERO_DOSSIER_AUTO_OFFSET_RESET}
+
+application:
+  information:
+    code_ap: APXXXXXX
+    error_code: REC
+  orgEntity: PF
+  timezone: ${user.timezone}
+  #  version: @project.version@
+  name: Monparcours

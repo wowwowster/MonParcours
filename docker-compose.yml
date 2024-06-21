@@ -1,107 +1,44 @@
-version: "3.7"
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+name: monparcours
 
 networks:
   postgres-habitat-souscription-nt:
-  kafka-habitat-souscription-nt:
 
 services:
   postgres-habitat-souscription:
     container_name: "postgres-habitat-souscription"
-    image: "docker-registry-devops.pf.echonet/postgres:12"
+    image: postgres:16.3
     environment:
-      POSTGRES_DB: ${DB}
-      POSTGRES_USER: ${PGUSER}
-      POSTGRES_PASSWORD: ${PGPASSWORD}
-      PGDATA: /var/lib/postgresql/data
+      - POSTGRES_USER=MonParcours
+      - POSTGRES_PASSWORD=MonParcours
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - PGDATA=/var/lib/postgresql/data
     networks:
       - postgres-habitat-souscription-nt
     volumes:
       - db-habitat-souscription-data:/var/lib/postgresql/data
     ports:
-      - "${PGPORT}:5432"
+      - 127.0.0.1:5432:5432
     restart: always
 
   pgadmin-habitat-souscription:
     container_name: "pgadmin-habitat-souscription"
-    image: "docker-registry-devops.pf.echonet/dpage/pgadmin4"
+    image: "dpage/pgadmin4"
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGAEMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGAPASSWORD}
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
     ports:
-      - "${PGAPORT}:80"
+      - 127.0.0.1:8080:80
     networks:
       - postgres-habitat-souscription-nt
     volumes:
-      - db-habitat-souscription-data:/root/.pgadmin
+      - pgadmin-habitat-souscription-data:/root/.pgadmin
+    #  On s'assure que PgAdmin démarre après PostgreSQL.
+    depends_on:
+      - postgres-habitat-souscription
     restart: always
 
-zookeeper-habitat-souscription:
-  image: docker-registry-devops.pf.echonet/confluentinc/cp-zookeeper:latest.arm64
-  hostname: zookeeper
-  restart: on-failure
-  container_name: zookeeper-habitat-souscription
-  ports:
-    - "2181:2181"
-  environment:
-    ZOOKEEPER_CLIENT_PORT: 2181
-    ZOOKEEPER_TICK_TIME: 2000
-  networks:
-    - kafka-habitat-souscription-nt
-
-  broker-habitat-souscription:
-    image: docker-registry-devops.pf.echonet/confluentinc/cp-server:latest.arm64
-    hostname: broker
-    restart: on-failure
-    container_name: broker-habitat-souscription
-    depends_on:
-      - zookeeper-habitat-souscription
-    ports:
-      - "9092:9092"
-      - "9161:9161"
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://:9092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_JMX_PORT: 9101
-      KAFKA_JMX_HOSTNAME: localhost
-      KAFKA_CLIENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
-      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
-      CONFLUENT_SUPPORT_ENABLE: 'true'
-      CONFLUENT_SUPPORT_CUSTOMER_ID: anonymous
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
-    networks:
-        - kafka-habitat-souscription-nt
-
-  schema-registry-habitat-souscription:
-    image: docker-registry-devops.pf.echnonet/confluent/cp-schema-registry:latest.arm64
-    hostname: schema-registry
-    restart: on-failure
-
-
-
-  akhq-habitat-souscription:
-    image: docker-registry-devops.pf.echnonet/tchotludo/akhq:0.20.0
-    hostname: akhq
-    container_name: akhq-habitat-souscription
-    depends_on:
-      - zookeeper-habitat-souscription
-      - broker-habitat-souscription
-      - schema-registry-habitat-souscription
-    ports:
-      "8088:8088"
-    volumes:
-      - ./akhq/application.yml:/app/application.yml
-    networks:
-      - kafka-habitat-souscription-nt
-
 volumes:
-    - db-habitat-souscription-data:
-    - pgadmin-habitat-souscription-data:
+  db-habitat-souscription-data:
+  pgadmin-habitat-souscription-data:
+

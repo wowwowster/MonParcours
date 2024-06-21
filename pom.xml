@@ -71,6 +71,13 @@
             <version>5.7.10</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <!-- Le numero de version est paut être à changer car il est issu de ChatGPT -->
+            <version>42.3.3</version>
+        </dependency>
+
     </dependencies>
 
     <build>
