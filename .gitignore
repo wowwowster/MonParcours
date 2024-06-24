@@ -46,4 +46,4 @@ chart/Chart.lock
 chart/charts/
 
 # à remettre plus tard
-docker-compose.yml
+#  ?? docker-compose.yml
