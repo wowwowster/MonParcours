@@ -9,8 +9,9 @@ services:
     container_name: "postgres-habitat-souscription"
     image: postgres:16.3
     environment:
-      - POSTGRES_USER=MonParcours
-      - POSTGRES_PASSWORD=MonParcours
+      - POSTGRES_DB=habitat-souscription
+      - POSTGRES_USER=habitat
+      - POSTGRES_PASSWORD=habitat
       - POSTGRES_HOST_AUTH_METHOD=trust
       - PGDATA=/var/lib/postgresql/data
     networks:

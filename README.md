@@ -15,6 +15,9 @@ docker compose -f docker-compose.yml down
 ```
 
 # claurier - Mes notes
+suppression des images (on force en cas de blocages) ->
+docker rmi -f $(docker images -q)
+
 créer les containers avec des logs ->
 docker-compose -f src/main/docker/postgresql.yml up -d && docker-compose -f src/main/docker/postgresql.yml logs -f
 
