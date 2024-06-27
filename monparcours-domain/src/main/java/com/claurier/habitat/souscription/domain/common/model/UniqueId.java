@@ -1,6 +1,5 @@
 package com.claurier.habitat.souscription.domain.common.model;
 
-import com.bnpp.pf.habitat.souscription.domain.common.ddd.DDD;
 import com.claurier.habitat.souscription.domain.common.ddd.BaseValueObject;
 
 import com.claurier.habitat.souscription.domain.validation.annotations.ValidUuid;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@DDD.ValueObjectId
+@BaseValueObject.DDD.ValueObjectId
 public class UniqueId extends BaseValueObject<UniqueId>
 {
     @Constraint
