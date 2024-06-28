@@ -1,0 +1,1 @@
+Here put .avsc__ file to generate entities from Kafka golden source

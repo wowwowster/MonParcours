@@ -1,0 +1,14 @@
+{
+  "namespace": "com.bnpp.pf.habitat.souscription.infrastructure.event.model.avro",
+  "type": "record",
+  "doc": "" ,
+  "name": "KOpportunity",
+  "fields": [
+    {
+      "name": "id",
+      "type": ["null", "string"],
+      "doc": "",
+      "default": null
+    }
+  ]
+}

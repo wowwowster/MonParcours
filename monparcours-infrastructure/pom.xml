@@ -13,6 +13,23 @@
     <name>monparcours-infrastructure module</name>
     <description>Infrastructure module</description>
 
+    <repositories>
+        <repository>
+            <id>maven-central</id>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>confluent</id>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
+    <properties>
+        <avro-maven-plugin.version>1.11.1</avro-maven-plugin.version>
+        <io-confluent-kafka.version>7.1.1</io-confluent-kafka.version>
+        <mapstruct-processor.version>1.4.2.Final</mapstruct-processor.version>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
         </dependencies>
@@ -31,6 +48,50 @@
             <artifactId>monparcours-application</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
+        <!-- Kafka dependencies -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-schema-registry-client</artifactId>
+            <version>${io-confluent-kafka.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.ws.rs</groupId>
+                    <artifactId>javax.ws.rs-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.swagger.core.v3</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
+            <version>${io-confluent-kafka.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-streams-avro-serde</artifactId>
+            <version>${io-confluent-kafka.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>1.11.1</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <!--    <build>

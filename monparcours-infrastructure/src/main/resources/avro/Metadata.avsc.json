@@ -1,0 +1,64 @@
+{
+  "type": "record",
+  "name": "Metadata",
+  "namespace": "com.bnpp.pf.pfeventstreamsplatform",
+  "doc": "Metada is an Avro record used to add some information into PF Event Streams Platform messages",
+  "fields": [
+    {
+      "name": "idempotencyId",
+      "type": "string",
+      "confidentiality": "public",
+      "gdpr": "no",
+      "doc": "Set by the producer and always the same value for the very same message like during retries. Consumers must use it to deduplicate messages and guarantee exactly-once-processing since exactly-once-delivery cannot be guaranteed by producers into distributed architecture"
+    },
+    {
+      "name": "correlationId",
+      "confidentiality": "public",
+      "gdpr": "no",
+      "type": "string",
+      "doc": "Provided by downstream flow and simply propagated (or created if unset) by the producer"
+    },
+    {
+      "name": "eventType",
+      "confidentiality": "public",
+      "gdpr": "no",
+      "type": {
+        "type": "enum",
+        "name": "EventTypeSymbols",
+        "symbols": [
+          "created",
+          "deleted",
+          "updated"
+        ]
+      }
+    },
+    {
+      "name": "eventTimeIso8601",
+      "confidentiality": "public",
+      "gdpr": "no",
+      "type": "string",
+      "doc": "The moment when event was captured, as close as possible to the user. For example, when he clicked on the submit button. Represented as a String with pattern yyyy-MM-dd'T'HH:mm:ss'Z'"
+    },
+    {
+      "name": "messageBuiltTimeIso8601",
+      "confidentiality": "public",
+      "gdpr": "no",
+      "type": "string",
+      "doc": "Set by the producer at the moment where it is building the message, just before sending it.Represented as a String with pattern yyyy-MM-dd'T'HH:mm:ss'Z'"
+    },
+    {
+      "name": "producer",
+      "confidentiality": "public",
+      "gdpr": "no",
+      "type": "string",
+      "doc": "The technical name of the producer sending this message"
+    },
+    {
+      "name": "producerVersion",
+      "confidentiality": "public",
+      "gdpr": "no",
+      "type": "string",
+      "doc": "The software version of the producer sending this message"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "Key",
+  "namespace": "com.claurier.pfeventstreamsplatform",
+  "doc": "Into PF Event Streams Platform, if the message key is set, it is an Avro record represented by a single value",
+  "fields": [
+      {
+          "name": "value",
+          "type": "string",
+          "doc": "the value of the key is the id of the entity located into the data to which the event relates to",
+          "confidentiality": "internal",
+          "gdpr": "yes and sensitive"
+      }
+  ]
+}

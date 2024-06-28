@@ -1,0 +1,20 @@
+{
+  "namespace": "com.bnpp.pf.habitat.souscription.infrastructure.event.model.avro",
+  "type": "record",
+  "name": "EventOnOpportunity",
+  "doc": "Event to notify a mutation of state on the entity Opportunity",
+  "source": "Entity Opportunity",
+  "sql":"",
+  "fields": [
+    {
+      "name": "data",
+      "doc": "The data to which the event relates",
+      "type": "com.bnpp.pf.habitat.souscription.infrastructure.event.model.avro.Kopportunity"
+    },
+    {
+    "name": "metadata",
+    "doc": "The metadata to which the event relates",
+    "type": "com.bnpp.pf.pfeventstreams platform. Metadata",
+    }
+  ]
+}
