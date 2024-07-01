@@ -1,2 +1,28 @@
 FROM docker-registry-devops.pf.echnonet/bnpp-pf/liquibase-postgres:23.0-2
 ADD souscription-infrastructure/src/main/resources/db/ /applis/liquibase/changeLog/db/
+
+/** claurier
+Interprétation Globale
+Ce Dockerfile fait les choses suivantes :
+
+Utilisation d'une image Docker existante : Il part d'une image Docker préexistante (liquibase-postgres:23.0-2) qui est hébergée dans un registre Docker privé. Cette image inclut probablement Liquibase et les configurations nécessaires pour travailler avec PostgreSQL.
+
+Ajout de fichiers de changement de schéma : Il copie les fichiers de changement de schéma Liquibase depuis le répertoire local souscription-infrastructure/src/main/resources/db/ vers le répertoire /applis/liquibase/changeLog/db/ dans le conteneur.
+
+Pourquoi faire cela ?
+Préparation à l'exécution : Cette configuration permet de préparer un environnement où Liquibase est déjà installé et configuré, avec tous les scripts de migration de base de données nécessaires déjà en place.
+Isolation et Portabilité : En encapsulant Liquibase et les scripts de migration dans un conteneur Docker, vous obtenez un environnement de déploiement portable qui peut être utilisé de manière cohérente sur différentes machines et environnements.
+Comment Utiliser ce Dockerfile
+Pour utiliser ce Dockerfile, vous pouvez construire l'image Docker personnalisée en exécutant la commande suivante dans le répertoire où se trouve le Dockerfile :
+
+sh
+Copier le code
+docker build -t my-custom-liquibase-image .
+Ensuite, vous pouvez exécuter cette image pour appliquer les migrations de base de données en utilisant la commande suivante :
+
+sh
+Copier le code
+docker run --rm my-custom-liquibase-image update
+Cela exécutera Liquibase en utilisant les scripts de migration situés dans /applis/liquibase/changeLog/db/ du conteneur, qui ont été copiés depuis votre répertoire local.
+
+*/
